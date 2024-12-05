@@ -11,4 +11,8 @@ class Cliente extends Model
     use HasFactory;
 
     protected $fillable = ['nombre'];
+
+    public function prestamos() {
+        return $this->hasMany(Prestamo::class);
+    }
 }

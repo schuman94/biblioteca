@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\EjemplarController;
 use App\Http\Controllers\LibroController;
+use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +22,13 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('libros', LibroController::class);
+
 Route::resource('clientes', ClienteController::class);
+
+Route::resource('ejemplares', EjemplarController::class)->parameters([
+    'ejemplares' => 'ejemplar',
+]);
+
+Route::resource('prestamos', PrestamoController::class);
 
 require __DIR__.'/auth.php';
