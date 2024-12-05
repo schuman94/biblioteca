@@ -22,7 +22,7 @@ class LibroController extends Controller
      */
     public function create()
     {
-        //
+        return view('libros.create');
     }
 
     /**
@@ -30,7 +30,14 @@ class LibroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'autor' => 'required|string|max:255'
+        ]);
+
+        $libro = Libro::create($validated);
+        session()->flash('exito', 'Libro creado correctamente.');
+        return redirect()->route('libros.show', $libro);
     }
 
     /**
@@ -38,7 +45,9 @@ class LibroController extends Controller
      */
     public function show(Libro $libro)
     {
-        //
+        return view('libros.show', [
+            'libro' => $libro,
+        ]);
     }
 
     /**
@@ -46,7 +55,9 @@ class LibroController extends Controller
      */
     public function edit(Libro $libro)
     {
-        //
+        return view('libros.edit',[
+            'libro' => $libro,
+        ]);
     }
 
     /**
@@ -54,7 +65,15 @@ class LibroController extends Controller
      */
     public function update(Request $request, Libro $libro)
     {
-        //
+        $validated = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'autor' => 'required|string|max:255'
+        ]);
+
+        $libro->fill($validated);
+        $libro->save();
+        session()->flash('exito', 'Libro modificado correctamente.');
+        return redirect()->route('libros.index');
     }
 
     /**
@@ -62,6 +81,7 @@ class LibroController extends Controller
      */
     public function destroy(Libro $libro)
     {
-        //
+        $libro->delete();
+        return redirect()->route('libros.index');
     }
 }
