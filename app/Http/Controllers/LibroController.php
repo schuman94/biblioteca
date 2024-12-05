@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ejemplar;
 use App\Models\Libro;
 use Illuminate\Http\Request;
 

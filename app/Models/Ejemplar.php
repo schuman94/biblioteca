@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Query\Builder;
 
 class Ejemplar extends Model
 {
@@ -22,14 +22,25 @@ class Ejemplar extends Model
         return $this->hasMany(Prestamo::class);
     }
 
-    public static function disponibles() {
-        $query = "
-            SELECT ejemplares.*
-            FROM ejemplares
-            LEFT JOIN prestamos ON prestamos.ejemplar_id = ejemplares.id
-            WHERE (prestamos.id IS NULL OR NOW() > prestamos.fecha_hora + interval '1 month')
-        ";
+    public function prestado(){
+        if ($this->prestamos) {
+            $prestado = false;
+        } elseif ($this->prestamos()->whereNull('fecha_dev')->first()) {
+            $prestado = true;
+        } else {
+            $prestado = true;
+        }
+        return $prestado;
+    }
 
-        return DB::select($query);
+    // No la estoy usando
+    public static function disponibles() {
+        $disponibles = Ejemplar::whereNotIn('id', function(Builder $query) {
+            $query->select('ejemplar_id')
+            ->from('prestamos')
+            ->whereNull('fecha_dev');
+        })->get();
+
+        return $disponibles;
     }
 }

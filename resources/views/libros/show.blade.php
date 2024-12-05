@@ -53,10 +53,18 @@
                                     {{ $ejemplar->codigo }}
                                 </th>
                                 <td class="px-6 py-4">
-                                    {{ $ejemplar->prestamos }}
+                                    @if ($ejemplar->prestado())
+                                        Sí
+                                    @else
+                                        No
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $ejemplar->prestamo->fecha_hora }}
+                                    @if ($ejemplar->prestado())
+                                        Sí
+                                    @else
+                                        No
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
