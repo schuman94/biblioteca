@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Models\Ejemplar;
 use App\Models\Prestamo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PrestamoController extends Controller
@@ -14,7 +15,9 @@ class PrestamoController extends Controller
      */
     public function index()
     {
-        //
+        return view('prestamos.index', [
+            'prestamos' => Prestamo::all(),
+        ]);
     }
 
     /**
@@ -48,11 +51,11 @@ class PrestamoController extends Controller
             ],
         ]);
 
-        $validated['fecha_hora'] = now();
+        $validated['fecha_hora'] = Carbon::now();
 
         $prestamo = Prestamo::create($validated);
-        session()->flash('exito', 'Préstamo creado correctamente.');
-        return redirect()->route('prestamos.create', $prestamo);
+        //session()->flash('exito', 'Préstamo creado correctamente.');
+        return redirect()->route('prestamos.index', $prestamo);
     }
 
     /**
@@ -78,6 +81,18 @@ class PrestamoController extends Controller
     {
         //
     }
+
+    public function devolver(Prestamo $prestamo)
+    {
+        if (!isset($prestamo->fecha_dev)) {
+            $prestamo->fecha_dev = Carbon::now();
+            $prestamo->save();
+            session()->flash('exito', 'Prestamo devuelto.');
+        }
+        return redirect()->route('prestamos.index');
+    }
+
+
 
     /**
      * Remove the specified resource from storage.

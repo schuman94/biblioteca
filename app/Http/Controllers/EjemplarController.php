@@ -38,14 +38,14 @@ class EjemplarController extends Controller
         $validated = $request->validate([
             'codigo' => [
                 'required',
-                'numeric',                  // Verifica que sea un número
-                'digits_between:1,6',       // Verifica que tenga exactamente 6 dígitos
+                'numeric',
+                'digits_between:1,6',
                 'unique:ejemplares,codigo', // Verifica que sea único en la tabla `ejemplares`
             ],
             'libro_id' => [
                 'required',
-                'integer',              // Verifica que sea un número entero
-                'exists:libros,id',     // Verifica que el libro existe en la tabla `libros`
+                'integer',
+                'exists:libros,id',
             ],
         ]);
 
@@ -84,8 +84,8 @@ class EjemplarController extends Controller
         $validated = $request->validate([
             'codigo' => [
                 'required',
-                'numeric',                  // Verifica que sea un número
-                'digits_between:1,6',       // Verifica que tenga exactamente 6 dígitos
+                'numeric',
+                'digits_between:1,6',
                 Rule::unique('ejemplares')->ignore($ejemplar), // Verifica que sea único en la tabla `ejemplares` ignorando su propio codigo
             ],
             'libro_id' => [

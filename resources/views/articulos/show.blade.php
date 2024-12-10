@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Ver ejemplar
+            Ver artículo
         </h2>
     </x-slot>
 
@@ -15,37 +15,28 @@
                                 Código
                             </dt>
                             <dd class="text-lg font-semibold">
-                                {{ $ejemplar->codigo }}
+                                {{ $articulo->codigo }}
                             </dd>
                         </div>
                         <div class="flex flex-col py-3">
                             <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
-                                Libro
+                                Descripcion
                             </dt>
                             <dd class="text-lg font-semibold">
-                                {{ $ejemplar->libro->titulo }}
+                                {{ $articulo->descripcion }}
                             </dd>
                         </div>
                         <div class="flex flex-col py-3">
                             <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
-                                Prestamo
+                                Precio
                             </dt>
                             <dd class="text-lg font-semibold">
-                                @if ($ejemplar->prestado())
-                                    @if ($ejemplar->prestamo_activo()->esta_vencido())
-                                        Vencido
-                                    @else
-                                        No vencido
-                                    @endif
-                                @else
-                                    No prestado
-                                @endif
+                                {{ $articulo->precio }} €
                             </dd>
                         </div>
                     </dl>
                 </div>
             </div>
-
         </div>
     </div>
 </x-app-layout>

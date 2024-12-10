@@ -22,18 +22,20 @@ class Ejemplar extends Model
         return $this->hasMany(Prestamo::class);
     }
 
-    public function prestado(){
-        if ($this->prestamos) {
-            $prestado = false;
-        } elseif ($this->prestamos()->whereNull('fecha_dev')->first()) {
-            $prestado = true;
-        } else {
-            $prestado = true;
-        }
-        return $prestado;
+    public function prestado(): bool {
+        return $this->prestamos()->whereNull('fecha_dev')->exists();
     }
 
-    // No la estoy usando
+    public function prestamo_activo(): Prestamo|null {
+        return $this->prestamos()->whereNull('fecha_dev')->first();
+    }
+
+    // No usado
+    public function ultimo_devuelto(): Prestamo|null {
+        return $this->prestamos()->whereNotNull('fecha_dev')->orderBy('fecha_dev', 'desc')->first();
+    }
+
+    // No usado
     public static function disponibles() {
         $disponibles = Ejemplar::whereNotIn('id', function(Builder $query) {
             $query->select('ejemplar_id')

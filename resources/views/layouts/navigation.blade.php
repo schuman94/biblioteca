@@ -25,8 +25,23 @@
                     <x-nav-link :href="route('ejemplares.index')" :active="request()->routeIs('ejemplares.index')">
                         Ejemplares
                     </x-nav-link>
-                    <x-nav-link :href="route('prestamos.create')" :active="request()->routeIs('prestamos.create')">
-                        Prestamo
+                    <x-nav-link :href="route('prestamos.index')" :active="request()->routeIs('prestamos.index')">
+                        Prestamos
+                    </x-nav-link>
+                    <x-nav-link :href="route('peliculas.index')" :active="request()->routeIs('peliculas.index')">
+                        Películas
+                    </x-nav-link>
+                    <x-nav-link :href="route('proyecciones.index')" :active="request()->routeIs('proyecciones.index')">
+                        Proyecciones
+                    </x-nav-link>
+                    <x-nav-link :href="route('articulos.index')" :active="request()->routeIs('articulos.index')">
+                        Artículos
+                    </x-nav-link>
+                    <x-nav-link :href="route('facturas.index')" :active="request()->routeIs('facturas.index')">
+                        Facturas
+                    </x-nav-link>
+                    <x-nav-link :href="route('alumnos.index')" :active="request()->routeIs('alumnos.index')">
+                        Alumnos
                     </x-nav-link>
                 </div>
             </div>

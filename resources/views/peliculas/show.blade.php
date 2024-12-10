@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Ver ejemplar
+            Ver pelicula
         </h2>
     </x-slot>
 
@@ -12,40 +12,23 @@
                     <dl class="max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
                         <div class="flex flex-col pb-3">
                             <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
-                                Código
+                                Título
                             </dt>
                             <dd class="text-lg font-semibold">
-                                {{ $ejemplar->codigo }}
+                                {{ $pelicula->titulo }}
                             </dd>
                         </div>
                         <div class="flex flex-col py-3">
                             <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
-                                Libro
+                                Entradas vendidas
                             </dt>
                             <dd class="text-lg font-semibold">
-                                {{ $ejemplar->libro->titulo }}
-                            </dd>
-                        </div>
-                        <div class="flex flex-col py-3">
-                            <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
-                                Prestamo
-                            </dt>
-                            <dd class="text-lg font-semibold">
-                                @if ($ejemplar->prestado())
-                                    @if ($ejemplar->prestamo_activo()->esta_vencido())
-                                        Vencido
-                                    @else
-                                        No vencido
-                                    @endif
-                                @else
-                                    No prestado
-                                @endif
+                                {{ $pelicula->entradas()->count(); }}
                             </dd>
                         </div>
                     </dl>
                 </div>
             </div>
-
         </div>
     </div>
 </x-app-layout>
