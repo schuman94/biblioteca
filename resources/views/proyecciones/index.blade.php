@@ -48,7 +48,7 @@
                                                 {{ $proyeccion->fecha_hora->setTimezone('Europe/Madrid')->format('d-m-Y') }}
                                             </td>
                                             <td class="px-6 py-4">
-                                                {{ $proyeccion->fecha_hora->setTimezone('Europe/Madrid')->format('H:i:s') }}
+                                                {{ $proyeccion->fecha_hora->setTimezone('Europe/Madrid')->format('H:i') }}
                                             </td>
                                             <td class="px-6 py-4 flex items-center gap-2">
                                                 <form method="POST" action="{{ route('entradas.store') }}">

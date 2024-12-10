@@ -12,6 +12,8 @@ class Proyeccion extends Model
 
     protected $table = 'proyecciones';
 
+    protected $fillable = ['pelicula_id', 'sala_id', 'fecha_hora'];
+
     protected $casts = [
         'fecha_hora' => 'datetime',
     ];

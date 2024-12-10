@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Proyeccion;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ProyeccionController extends Controller
@@ -22,10 +23,8 @@ class ProyeccionController extends Controller
      */
     public function create()
     {
-        $proyecciones = Proyeccion::all();
-        return view('proyecciones.create', [
-            'proyecciones' => $proyecciones
-        ]);
+
+        return view('proyecciones.create');
     }
 
     /**
@@ -44,11 +43,17 @@ class ProyeccionController extends Controller
                 'integer',
                 'exists:salas,id',
             ],
+            'fecha_hora' => [
+                'required',
+                'date',
+            ],
         ]);
 
+
+        $validated['fecha_hora'] = Carbon::createFromFormat('d-m-Y H:i', $validated['fecha_hora'], "Europe/Madrid")->utc();
         $proyeccion = Proyeccion::create($validated);
         session()->flash('exito', 'Proyeccion creada correctamente.');
-        return redirect()->route('proyecciones.show', $proyeccion);
+        return redirect()->route('proyecciones.index', $proyeccion);
     }
 
     /**
