@@ -22,7 +22,10 @@ class ProyeccionController extends Controller
      */
     public function create()
     {
-        //
+        $proyecciones = Proyeccion::all();
+        return view('proyecciones.create', [
+            'proyecciones' => $proyecciones
+        ]);
     }
 
     /**
@@ -30,7 +33,22 @@ class ProyeccionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'pelicula_id' => [
+                'required',
+                'integer',
+                'exists:peliculas,id',
+            ],
+            'sala_id' => [
+                'required',
+                'integer',
+                'exists:salas,id',
+            ],
+        ]);
+
+        $proyeccion = Proyeccion::create($validated);
+        session()->flash('exito', 'Proyeccion creada correctamente.');
+        return redirect()->route('proyecciones.show', $proyeccion);
     }
 
     /**
