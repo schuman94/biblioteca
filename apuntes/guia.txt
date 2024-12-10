@@ -38,17 +38,16 @@ npm install
 Instalacion de Tailwind:
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
-Configurar el fichero tailwind.config.js
+Configurar el fichero tailwind.config.js  //Luego lo vamos a volver a modificar
 En /resources/css/app.css añadir directivas:
     @tailwind base;
     @tailwind components;
     @tailwind utilities;
 
-
 Instalacion de Flowbite:
 npm install -D flowbite
 Modificar el fichero tailwind.config.js
-En /resources/js/app.js hay que añadir: import 'flowbite'; // Esto no esta añadido en biblioteca porque da error
+En /resources/js/app.js hay que añadir: import 'flowbite';
 
 
 Arrancar el servidor:
