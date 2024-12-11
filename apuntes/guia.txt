@@ -39,7 +39,7 @@ Instalacion de Tailwind:
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 Configurar el fichero tailwind.config.js  //Luego lo vamos a volver a modificar
-En /resources/css/app.css añadir directivas:
+En /resources/css/app.css añadir directivas:   //por defecto vienen puestas
     @tailwind base;
     @tailwind components;
     @tailwind utilities;
