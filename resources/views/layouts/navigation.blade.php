@@ -43,6 +43,9 @@
                     <x-nav-link :href="route('alumnos.index')" :active="request()->routeIs('alumnos.index')">
                         Alumnos
                     </x-nav-link>
+                    <x-nav-link :href="route('videojuegos.index')" :active="request()->routeIs('videojuegos.index')">
+                        Videojuegos
+                    </x-nav-link>
                 </div>
             </div>
 

@@ -49,4 +49,12 @@ class User extends Authenticatable
     public function facturas() {
         return $this->hasMany(Factura::class);
     }
+
+    /**
+     * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Videojuego[] $videojuegos
+     */
+    public function videojuegos() {
+        return $this->belongsToMany(Videojuego::class)
+            ->withPivot('cantidad');
+    }
 }

@@ -14,6 +14,7 @@ use App\Http\Controllers\CeController;
 use App\Http\Controllers\NotaController;
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VideojuegoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -62,5 +63,8 @@ Route::resource('ccee', CeController::class)->parameters([
 Route::resource('notas', NotaController::class);
 Route::get('alumnos/criterios/{alumno}', [AlumnoController::class, 'criterios'])->name('alumnos.criterios');
 
+// Videojuegos
+Route::resource('videojuegos', VideojuegoController::class);
+Route::put('videojuegos/adquirir/{videojuego}', [VideojuegoController::class, 'adquirir'])->name('videojuegos.adquirir');
 
 require __DIR__.'/auth.php';

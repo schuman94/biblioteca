@@ -229,7 +229,6 @@ Para una tabla pivote que no corresponde a ningun modelo:
 php artisan make:migration create_articulo_factura_table    (orden alfabetico de los nombres)
 Luego editamos la migracion:
     Schema::create('articulo_factura', function (Blueprint $table) {
-                $table->id();
                 $table->foreignId('articulo_id')->constrained();
                 $table->foreignId('factura_id')->constrained();
                 $table->primary(['articulo_id', 'factura_id']);
@@ -274,3 +273,9 @@ En el show podriamos hacer que solo entre quien es usuario de esa factura concre
             'factura' => $factura,
         ]);
     }
+
+Para crear una ruta diferente:
+Route::put('prestamos/devolver/{prestamo}', [PrestamoController::class, 'devolver'])->name('prestamos.devolver');
+Route::put('videojuegos/adquirir/{videojuego}', [VideojuegoController::class, 'adquirir'])->name('videojuegos.adquirir');
+Route::get('alumnos/criterios/{alumno}', [AlumnoController::class, 'criterios'])->name('alumnos.criterios');
+Además, hay que crear la funcion en el controlador, y un archivo de vista en el caso de alumnos
