@@ -232,7 +232,7 @@ Luego editamos la migracion:
                 $table->foreignId('articulo_id')->constrained();
                 $table->foreignId('factura_id')->constrained();
                 $table->primary(['articulo_id', 'factura_id']);
-                $table->integer('cantidad)->default(1);
+                $table->integer('cantidad')->default(1);
                 $table->timestamps();
     });
 

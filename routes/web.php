@@ -16,6 +16,12 @@ use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VideojuegoController;
 use Illuminate\Support\Facades\Route;
+use App\Generico\Carrito;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Models\Factura;
+use App\Models\Articulo;
+use Illuminate\Support\Str;
 
 Route::get('/', function () {
     return view('welcome');
@@ -66,5 +72,48 @@ Route::get('alumnos/criterios/{alumno}', [AlumnoController::class, 'criterios'])
 // Videojuegos
 Route::resource('videojuegos', VideojuegoController::class);
 Route::put('videojuegos/adquirir/{videojuego}', [VideojuegoController::class, 'adquirir'])->name('videojuegos.adquirir');
+
+
+
+
+// Carrito
+Route::get('/carrito/meter/{articulo}', function (Articulo $articulo) {
+    $carrito = Carrito::carrito();
+    $carrito->meter($articulo->id);
+    session()->put('carrito', $carrito);
+    return redirect()->route('articulos.index');
+})->name('carrito.meter');
+
+Route::get('/carrito/sacar/{articulo}', function (Articulo $articulo) {
+    $carrito = Carrito::carrito();
+    $carrito->sacar($articulo->id);
+    session()->put('carrito', $carrito);
+    return redirect()->route('articulos.index');
+})->name('carrito.sacar');
+
+Route::get('/carrito/vaciar', function () {
+    session()->forget('carrito');
+    return redirect()->route('articulos.index');
+})->name('carrito.vaciar');
+
+Route::post('/comprar', function () {
+    $carrito = Carrito::carrito();
+    DB::beginTransaction();
+    $factura = new Factura();
+    $factura->codigo = (string) Str::uuid();
+    $factura->user()->associate(Auth::user());
+    $factura->save();
+    $attachs = [];
+    foreach ($carrito->getLineas() as $articulo_id => $linea) {
+        $attachs[$articulo_id] = ['cantidad' => $linea->getCantidad()];
+    }
+    $factura->articulos()->attach($attachs);
+    DB::commit();
+    session()->forget('carrito');
+    session()->flash('exito', 'Factura generada.');
+    return redirect()->route('articulos.index');
+})->middleware('auth')->name('comprar');
+
+
 
 require __DIR__.'/auth.php';
