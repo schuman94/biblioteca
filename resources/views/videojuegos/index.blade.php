@@ -21,6 +21,11 @@
                                         <th scope="col" class="px-6 py-3">
                                             Desarrollador
                                         </th>
+                                        @auth
+                                        <th scope="col" class="px-6 py-3">
+                                            Adquiridos
+                                        </th>
+                                        @endauth
                                         <th colspan="3" scope="col" class="px-6 py-3">
                                             Acciones
                                         </th>
@@ -36,8 +41,13 @@
                                                 </a>
                                             </th>
                                             <td class="px-6 py-4">
-                                                {{ $videojuego->autor }}
+                                                {{ $videojuego->desarrollador }}
                                             </td>
+                                            @auth
+                                            <td class="px-6 py-4">
+                                                {{ Auth::user()->videojuegos->where('id', $videojuego->id)->first()?->pivot->cantidad /* Importante el "?" para que no de error si no existe */}}
+                                            </td>
+                                            @endauth
                                             <td class="px-6 py-4 flex items-center gap-2">
                                                 <a href="{{ route('videojuegos.edit', $videojuego) }}"
                                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
@@ -50,7 +60,7 @@
                                                         class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
                                                         onclick="return confirm('¿Está seguro?');">
                                                         Eliminar
-                                                    </a>
+                                                    </button>
                                                 </form>
                                                 <form method="POST" action="{{ route('videojuegos.adquirir', $videojuego) }}">
                                                     @csrf

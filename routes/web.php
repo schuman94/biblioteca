@@ -71,7 +71,7 @@ Route::get('alumnos/criterios/{alumno}', [AlumnoController::class, 'criterios'])
 
 // Videojuegos
 Route::resource('videojuegos', VideojuegoController::class);
-Route::post('videojuegos/adquirir/{videojuego}', [VideojuegoController::class, 'adquirir'])->name('videojuegos.adquirir');
+Route::post('videojuegos/adquirir/{videojuego}', [VideojuegoController::class, 'adquirir'])->name('videojuegos.adquirir')->middleware('auth');
 
 
 
