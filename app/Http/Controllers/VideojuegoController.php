@@ -92,25 +92,24 @@ class VideojuegoController extends Controller
 
     public function adquirir(Videojuego $videojuego)
     {
-        if ($videojuego->id) {
-            $usuario = Auth::user();
+        if (isset($videojuego->id)) {
 
-            if (!$usuario) {
+            if (!Auth::user()) {
                 abort(403, 'Usuario no autenticado.');
             }
 
             // Verificar si el videojuego ya está asociado
-            if ($usuario->videojuegos()->where('videojuego_id', $videojuego->id)->exists()) {
+            if (Auth::user()->videojuegos()->where('videojuego_id', $videojuego->id)->exists()) {
 
                 // Incrementar la cantidad en la tabla pivot
-                $usuario->videojuegos()->updateExistingPivot($videojuego->id, [
+                Auth::user()->videojuegos()->updateExistingPivot($videojuego->id, [
                     'cantidad' => DB::raw('cantidad + 1')
                 ]);
                 session()->flash('exito', 'Videojuego adquirido otra vez.');
 
             } else {
                 // Crear una nueva relación con cantidad inicial de 1
-                $usuario->videojuegos()->attach($videojuego->id);
+                Auth::user()->videojuegos()->attach($videojuego->id);
                 session()->flash('exito', 'Videojuego adquirido.');
             }
 
