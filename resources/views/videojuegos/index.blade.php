@@ -46,20 +46,19 @@
                                                 <form method="POST" action="{{ route('videojuegos.destroy', $videojuego) }}">
                                                     @method('DELETE')
                                                     @csrf
-                                                    <a href="{{ route('videojuegos.destroy', $videojuego) }}"
+                                                    <button type="submit"
                                                         class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
-                                                        onclick="event.preventDefault(); if (confirm('¿Está seguro?')) this.closest('form').submit();">
+                                                        onclick="return confirm('¿Está seguro?');">
                                                         Eliminar
                                                     </a>
                                                 </form>
                                                 <form method="POST" action="{{ route('videojuegos.adquirir', $videojuego) }}">
-                                                    @method('PUT')
                                                     @csrf
-                                                    <a href="{{ route('videojuegos.adquirir', $videojuego) }}"
+                                                    <button type="submit"
                                                         class="font-medium text-green-600 dark:text-green-500 hover:underline ms-3"
-                                                        onclick="event.preventDefault(); if (confirm('¿Está seguro?')) this.closest('form').submit();">
+                                                        onclick="return confirm('¿Está seguro?');">
                                                         Adquirir
-                                                    </a>
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>

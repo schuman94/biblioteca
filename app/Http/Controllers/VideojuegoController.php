@@ -92,28 +92,25 @@ class VideojuegoController extends Controller
 
     public function adquirir(Videojuego $videojuego)
     {
-        if (isset($videojuego->id)) {
 
-            if (!Auth::user()) {
-                abort(403, 'Usuario no autenticado.');
-            }
 
-            // Verificar si el videojuego ya está asociado
-            if (Auth::user()->videojuegos()->where('videojuego_id', $videojuego->id)->exists()) {
-
-                // Incrementar la cantidad en la tabla pivot
-                Auth::user()->videojuegos()->updateExistingPivot($videojuego->id, [
-                    'cantidad' => DB::raw('cantidad + 1')
-                ]);
-                session()->flash('exito', 'Videojuego adquirido otra vez.');
-
-            } else {
-                // Crear una nueva relación con cantidad inicial de 1
-                Auth::user()->videojuegos()->attach($videojuego->id);
-                session()->flash('exito', 'Videojuego adquirido.');
-            }
-
+        if (!Auth::user()) {
+            abort(403, 'Usuario no autenticado.');
         }
+        // Verificar si el videojuego ya está asociado
+        if (Auth::user()->videojuegos()->where('videojuego_id', $videojuego->id)->exists()) {
+            // Incrementar la cantidad en la tabla pivot
+            Auth::user()->videojuegos()->updateExistingPivot($videojuego->id, [
+                'cantidad' => DB::raw('cantidad + 1')
+            ]);
+            session()->flash('exito', 'Videojuego adquirido otra vez.');
+        } else {
+            // Crear una nueva relación con cantidad inicial de 1
+            Auth::user()->videojuegos()->attach($videojuego->id);
+            session()->flash('exito', 'Videojuego adquirido.');
+        }
+
+
 
         return redirect()->route('videojuegos.index');
     }
